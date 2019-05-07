@@ -1,12 +1,11 @@
-# BatchLoader
+# PaginationPageInfo
 
-A TypeScript/Javascript class that loads a batch (array) of data from a larger set  
-that is too big to be loaded all at once.  This batch can then be used by a  
-paginator or any other kind of manipulation tool.
+A TypeScript/Javascript class intended to help a separate Paginator class  
+paginate data.  Specifically, this class contains the properties `itemsPerPage`  
+and `totalPages`, which will be used by other classes, like the Paginator.
 
 
 ## Constructor
-3 objects must be injected in the constructor.
 <details>
 <summary>view constructor</summary>
 
@@ -14,26 +13,16 @@ paginator or any other kind of manipulation tool.
 constructor(
 
     dataSource: {
-        // same instance of dataSource must also be injected into `batchCalculator`.
 
-        getBatch: (batchNumber: number, itemsPerBatch: number, isLastBatch: boolean) => any[];
-            // `getBatch()` is called whenever a new batch must be loaded.  The number of items it 
-            // returns matches `itemsPerBatch`.  If `isLastBatch` is true, it only returns the 
-            // remaining items in the dataset, and ignores itemsPerBatch.
-
-        dataTotal: number;
+        dataTotal: number
             // Number of items in entire dataset, not the batch.
-            // This must stay accurate after actions that change the total, such as searches.
+            // This must stay accurate after actions that change the total, 
+            // such as searches.
     },
-
-    batchContainer: { data: any[] },
-        // `batchContainer` is injected so it can also be used outside of this class.
-        // It's kept as a private property here, so you must make it accessible outside of this 
-        // class in order to manipulate it.
-        
-    batchCalculator: BatchCalculator
-        // Tells `dataSource` what batch to fetch.
-        // BatchCalculator is included as a package dependency.
+   	
+    batchPaginator: { itemsPerPage: number }
+        // Stores and paginates a batch (array) of data, which it assumes 
+        // is the entire dataset.
 ) 
 ```
 </details>
@@ -44,9 +33,11 @@ constructor(
 <summary>view properties</summary>
 
 ```ts
-itemsPerBatch: number
-    // The number of items `batchContainer.data` will contain.
-    // Gives public read/write access to `batchCalculator.itemsPerBatch`.
+itemsPerPage: number
+
+totalPages: number // read-only
+
+className: string // read-only
 ```
 </details>
 
@@ -55,15 +46,6 @@ itemsPerBatch: number
 <details>
 <summary>view methods</summary>
 
-```ts
-loadBatch(batchNumber): void
-    // Gets the batch and stores it in `batchContainer.data`,
-    // the parameter in the constructor.
-
-loadBatchContainingPage(pageNumber): void
-    // Useful if you intend to use the batch for pagination.
-    // Gets the batch containing `pageNumber` and stores it in `batchContainer.data`
-```
 The methods below are not important to know about in order to use this  
 class.  They're inherited from [BaseClass](https://github.com/writetome51/typescript-base-class#baseclass) .
 ```ts
@@ -97,32 +79,33 @@ protected   _createGetterAndOrSetterForEach(
 protected   _returnThis_after(voidExpression: any) : this
     // voidExpression is executed, then function returns this.
     // Even if voidExpression returns something, the returned data isn't used.
-
-protected   _runMethod_and_returnThis(
-    callingObject, 
-    method: Function, 
-    methodArgs: any[], 
-    additionalAction?: Function // takes the result returned by method as an argument.
-) : this
+    
+protected   _errorIfPropertyHasNoValue(
+                property: string, // can contain dot-notation, i.e., 'property.subproperty'
+                propertyNameInError? = ''
+            ) : void
+    // If value of this[property] is undefined or null, it triggers fatal error:
+    // `The property "${propertyNameInError}" has no value.`
 ```
 </details>
 
 
 ## Inheritance Chain
 
-BatchLoader<--[BaseClass](https://github.com/writetome51/typescript-base-class#baseclass)
+PaginationPageInfo<--[BaseClass](https://github.com/writetome51/typescript-base-class#baseclass)
 
 
 ## Installation
 
-`npm install @writetome51/batch-loader`
+`npm install @writetome51/pagination-page-info`
 
 ## Loading
 ```ts
 // if using TypeScript:
-import { BatchLoader } from '@writetome51/batch-loader';
+import { PaginationPageInfo } from '@writetome51/pagination-page-info';
 // if using ES5 JavaScript:
-var BatchLoader = require('@writetome51/batch-loader').BatchLoader;
+var PaginationPageInfo = 
+    require('@writetome51/pagination-page-info').PaginationPageInfo;
 ```
 
 ## License

@@ -23,21 +23,21 @@ var get_rounded_up_down_1 = require("@writetome51/get-rounded-up-down");
 var PaginationPageInfo = /** @class */ (function (_super) {
     __extends(PaginationPageInfo, _super);
     function PaginationPageInfo(__dataSource, 
-    // Stores and paginates an array, which it assumes is the entire dataset.
+    // Stores and paginates a batch (array) of data, which it assumes is the entire dataset.
     // We need this for its property 'itemsPerPage'.
-    __arrPaginator) {
+    __batchPaginator) {
         var _this = _super.call(this) || this;
         _this.__dataSource = __dataSource;
-        _this.__arrPaginator = __arrPaginator;
+        _this.__batchPaginator = __batchPaginator;
         return _this;
     }
     Object.defineProperty(PaginationPageInfo.prototype, "itemsPerPage", {
         get: function () {
-            this._errorIfPropertyHasNoValue('__arrPaginator.itemsPerPage', 'itemsPerPage');
-            return this.__arrPaginator.itemsPerPage;
+            this._errorIfPropertyHasNoValue('__batchPaginator.itemsPerPage', 'itemsPerPage');
+            return this.__batchPaginator.itemsPerPage;
         },
         set: function (value) {
-            this.__arrPaginator.itemsPerPage = value; // validates value.
+            this.__batchPaginator.itemsPerPage = value; // validates value.
         },
         enumerable: true,
         configurable: true

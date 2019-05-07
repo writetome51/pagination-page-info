@@ -21,23 +21,23 @@ export class PaginationPageInfo extends BaseClass {
 			dataTotal: number;
 		},
 
-		// Stores and paginates an array, which it assumes is the entire dataset.
+		// Stores and paginates a batch (array) of data, which it assumes is the entire dataset.
 		// We need this for its property 'itemsPerPage'.
 
-		private __arrPaginator: { itemsPerPage: number }
+		private __batchPaginator: { itemsPerPage: number }
 	) {
 		super();
 	}
 
 
 	set itemsPerPage(value) {
-		this.__arrPaginator.itemsPerPage = value; // validates value.
+		this.__batchPaginator.itemsPerPage = value; // validates value.
 	}
 
 
 	get itemsPerPage(): number {
-		this._errorIfPropertyHasNoValue('__arrPaginator.itemsPerPage', 'itemsPerPage');
-		return this.__arrPaginator.itemsPerPage;
+		this._errorIfPropertyHasNoValue('__batchPaginator.itemsPerPage', 'itemsPerPage');
+		return this.__batchPaginator.itemsPerPage;
 	}
 
 
