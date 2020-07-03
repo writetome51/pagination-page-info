@@ -1,28 +1,20 @@
-import { BaseClass } from '@writetome51/base-class';
-
-
-/********************
- Intended to help a separate Paginator class paginate data.
- Specifically, this class contains the properties `itemsPerPage` and `totalPages`, which will
- be used by other classes, like the Paginator.
- *******************/
-export declare class PaginationPageInfo extends BaseClass {
-
-	itemsPerPage: number;
-	readonly totalPages: number;
+export declare class PaginationPageInfo {
 
 	private __dataSource;
-	private __batchPaginator;
+	private __itemsPerPage;
 
 
 	constructor(
-		__dataSource: {
-			dataTotal: number;
-		},
-		__batchPaginator: {
-			itemsPerPage: number;
-		}
+		__dataSource: { dataTotal: number; }
 	);
 
+
+	setItemsPerPage(value: number): void;
+
+
+	getItemsPerPage(): number;
+
+
+	getTotalPages(): number;
 
 }

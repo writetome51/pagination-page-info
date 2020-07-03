@@ -1,15 +1,9 @@
-import { BaseClass } from '@writetome51/base-class';
 import { getRoundedUp } from '@writetome51/get-rounded-up-down';
 
 
-/********************
- Intended to help a separate Paginator class paginate data.
- Specifically, this class contains the properties `itemsPerPage` and `totalPages`, which will
- be used by other classes, like the Paginator.
- *******************/
+export class PaginationPageInfo {
 
-
-export class PaginationPageInfo extends BaseClass {
+	private __itemsPerPage: number;
 
 
 	constructor(
@@ -19,30 +13,24 @@ export class PaginationPageInfo extends BaseClass {
 			// This must stay accurate after any actions that change the total, such as searches.
 
 			dataTotal: number;
-		},
-
-		// Stores and paginates a batch (array) of data, which it assumes is the entire dataset.
-		// We need this for its property 'itemsPerPage'.
-
-		private __batchPaginator: { itemsPerPage: number }
+		}
 	) {
-		super();
 	}
 
 
-	set itemsPerPage(value) {
-		this.__batchPaginator.itemsPerPage = value; // validates value.
+	setItemsPerPage(value: number): void {
+		if (value < 1) throw new Error('The number of items per page must be at least 1');
+		this.__itemsPerPage = value;
 	}
 
 
-	get itemsPerPage(): number {
-		this._errorIfPropertyHasNoValue('__batchPaginator.itemsPerPage', 'itemsPerPage');
-		return this.__batchPaginator.itemsPerPage;
+	getItemsPerPage(): number {
+		return this.__itemsPerPage;
 	}
 
 
-	get totalPages(): number {
-		return getRoundedUp(this.__dataSource.dataTotal / this.itemsPerPage);
+	getTotalPages(): number {
+		return getRoundedUp(this.__dataSource.dataTotal / this.getItemsPerPage());
 	}
 
 

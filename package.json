@@ -1,7 +1,7 @@
 {
   "name": "@writetome51/pagination-page-info",
-  "version": "0.0.1",
-  "description": "TypeScript/Javascript class intended to help a separate Paginator class paginate data.  Specifically, this class contains the properties `itemsPerPage` and `totalPages`, which will be used by other classes, like the Paginator.",
+  "version": "1.0.0",
+  "description": "TypeScript/Javascript class intended to help a separate Paginator class paginate data",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -13,8 +13,6 @@
   },
   "keywords": [
     "data",
-    "batch",
-    "batches",
     "paginator",
     "pagination",
     "app",
@@ -29,7 +27,6 @@
   "homepage": "https://github.com/writetome51/pagination-page-info#readme",
   "devDependencies": {},
   "dependencies": {
-    "@writetome51/base-class": "~1.0.0",
     "@writetome51/get-rounded-up-down": "~1.0.11"
   }
 }
